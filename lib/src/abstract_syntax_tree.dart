@@ -41,6 +41,15 @@ class NumericLiteral extends Expression {
   String toString() => 'type: ${nodeType.name}, value: $value';
 }
 
+class NullLiteral extends Expression {
+  NullLiteral(this.value) : super(NodeType.nullLiteral);
+
+  final Token value;
+
+  @override
+  String toString() => 'type: ${nodeType.name}, value: $value';
+}
+
 class BinaryExpression extends Expression {
   BinaryExpression(this.left, this.right, this.operator)
       : super(NodeType.binaryExpression);

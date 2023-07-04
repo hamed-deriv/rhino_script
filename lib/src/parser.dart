@@ -50,11 +50,13 @@ class Parser {
   }
 
   Expression _parsePrimaryExpression() {
-    final TokenType operatorType = _getCurrentToken().type;
+    final TokenType tokenType = _getCurrentToken().type;
 
-    switch (operatorType) {
+    switch (tokenType) {
       case TokenType.identifier:
         return Identifier(_consume());
+      case TokenType.keyword:
+        return _handleKeyword(_consume());
       case TokenType.number:
         return NumericLiteral(_consume());
       case TokenType.openParenthesis:
@@ -83,5 +85,17 @@ class Parser {
     }
 
     return token;
+  }
+
+  Expression _handleKeyword(Token token) {
+    switch (token.value) {
+      case 'null':
+        return NullLiteral(token);
+
+      default:
+        throw Exception(
+          '$runtimeType unexpected keyword: ${token.value}.',
+        );
+    }
   }
 }

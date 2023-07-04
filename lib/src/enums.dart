@@ -2,6 +2,7 @@ enum TokenType {
   number,
   string,
   identifier,
+  nullable,
   unaryOperator,
   binaryOperator,
   ternaryOperator,
@@ -17,6 +18,7 @@ enum TokenType {
 enum NodeType {
   program,
   numericLiteral,
+  nullLiteral,
   identifier,
   binaryExpression,
 }

@@ -6,8 +6,10 @@ import 'token.dart';
 class Lexer {
   static List<Token> tokenize(String sourceCode) {
     final List<Token> tokens = <Token>[];
-    final Iterable<String> sections =
-        sourceCode.split(' ').map((String item) => item.trim());
+    final Iterable<String> sections = sourceCode
+        .split(' ')
+        .map((String item) => item.trim())
+        .where((String item) => item.isNotEmpty);
 
     for (final String section in sections) {
       switch (section) {
