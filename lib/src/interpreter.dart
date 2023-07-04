@@ -1,37 +1,43 @@
 import 'abstract_syntax_tree.dart';
 import 'enums.dart';
 import 'runtime_value.dart';
+import 'scope.dart';
 
 class Interpreter {
-  RuntimeValue evaluate(Statement node) {
+  RuntimeValue evaluate(Statement node, Scope scope) {
     switch (node.nodeType) {
       case NodeType.program:
-        return _evaluateProgram(node as Program);
+        return _evaluateProgram(node as Program, scope);
+      case NodeType.identifier:
+        return _evaluateIdentifier(node as Identifier, scope);
       case NodeType.nullLiteral:
         return const RuntimeNull();
       case NodeType.numericLiteral:
         return RuntimeNumber(num.parse((node as NumericLiteral).token.value));
       case NodeType.binaryExpression:
-        return _evaluateBinaryExpression(node as BinaryExpression);
+        return _evaluateBinaryExpression(node as BinaryExpression, scope);
 
       default:
         throw Exception('Unknown node type: ${node.nodeType.name}.');
     }
   }
 
-  RuntimeValue _evaluateProgram(Program node) {
+  RuntimeValue _evaluateProgram(Program node, Scope scope) {
     RuntimeValue result = const RuntimeNull();
 
     for (final Statement statement in node.statements) {
-      result = evaluate(statement);
+      result = evaluate(statement, scope);
     }
 
     return result;
   }
 
-  RuntimeValue _evaluateBinaryExpression(BinaryExpression node) {
-    final RuntimeValue left = evaluate(node.left);
-    final RuntimeValue right = evaluate(node.right);
+  RuntimeValue _evaluateIdentifier(Identifier node, Scope scope) =>
+      scope.get(node.token.value);
+
+  RuntimeValue _evaluateBinaryExpression(BinaryExpression node, Scope scope) {
+    final RuntimeValue left = evaluate(node.left, scope);
+    final RuntimeValue right = evaluate(node.right, scope);
 
     if (left.type == RuntimeType.number && right.type == RuntimeType.number) {
       final num leftNumber = (left as RuntimeNumber).value as num;
