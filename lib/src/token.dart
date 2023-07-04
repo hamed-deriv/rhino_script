@@ -7,5 +7,5 @@ class Token {
   final TokenType type;
 
   @override
-  String toString() => '$value: ${type.name}';
+  String toString() => '$value (${type.name})';
 }

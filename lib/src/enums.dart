@@ -11,6 +11,7 @@ enum TokenType {
   keyword,
   comment,
   unknown,
+  endOfFile,
 }
 
 enum NodeType {
