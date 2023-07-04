@@ -24,30 +24,30 @@ class Program extends Statement {
 }
 
 class Identifier extends Expression {
-  Identifier(this.value) : super(NodeType.identifier);
+  Identifier(this.token) : super(NodeType.identifier);
 
-  final Token value;
+  final Token token;
 
   @override
-  String toString() => 'type: ${nodeType.name}, value: $value';
+  String toString() => 'type: ${nodeType.name}, value: $token';
 }
 
 class NumericLiteral extends Expression {
-  NumericLiteral(this.value) : super(NodeType.numericLiteral);
+  NumericLiteral(this.token) : super(NodeType.numericLiteral);
 
-  final Token value;
+  final Token token;
 
   @override
-  String toString() => 'type: ${nodeType.name}, value: $value';
+  String toString() => 'type: ${nodeType.name}, value: $token';
 }
 
 class NullLiteral extends Expression {
-  NullLiteral(this.value) : super(NodeType.nullLiteral);
+  NullLiteral(this.token) : super(NodeType.nullLiteral);
 
-  final Token value;
+  final Token token;
 
   @override
-  String toString() => 'type: ${nodeType.name}, value: $value';
+  String toString() => 'type: ${nodeType.name}, value: $token';
 }
 
 class BinaryExpression extends Expression {

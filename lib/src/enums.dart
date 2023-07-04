@@ -22,3 +22,10 @@ enum NodeType {
   identifier,
   binaryExpression,
 }
+
+enum RuntimeType {
+  nil,
+  number,
+  string,
+  boolean,
+}
