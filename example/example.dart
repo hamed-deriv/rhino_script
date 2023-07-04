@@ -19,5 +19,5 @@ void main(List<String> args) {
 
   print('parser result:');
   program.statements.forEach(print);
-  print('\ninterpreter result: ${Interpreter().evaluate(program, scope)}');
+  print('\ninterpreter result:\n${Interpreter().evaluate(program, scope)}');
 }

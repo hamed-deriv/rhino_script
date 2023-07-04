@@ -1,35 +1,28 @@
 import 'enums.dart';
 
 abstract class RuntimeValue {
-  const RuntimeValue(this.type);
+  const RuntimeValue(this.value, this.type);
+
+  final Object? value;
 
   final RuntimeType type;
-
-  @override
-  String toString() => 'type: ${type.name}';
-}
-
-class RuntimeNull extends RuntimeValue {
-  const RuntimeNull() : super(RuntimeType.nil);
-}
-
-class RuntimeNounNull extends RuntimeValue {
-  const RuntimeNounNull(this.value) : super(RuntimeType.number);
-
-  final Object value;
 
   @override
   String toString() => 'type: ${type.name}, value: $value';
 }
 
-class RuntimeNumber extends RuntimeNounNull {
-  RuntimeNumber(num value) : super(value);
+class RuntimeNull extends RuntimeValue {
+  const RuntimeNull() : super(null, RuntimeType.nil);
 }
 
-class RuntimeBoolean extends RuntimeNounNull {
-  RuntimeBoolean(bool value) : super(value);
+class RuntimeNumber extends RuntimeValue {
+  RuntimeNumber(num value) : super(value, RuntimeType.number);
 }
 
-class RuntimeString extends RuntimeNounNull {
-  RuntimeString(String value) : super(value);
+class RuntimeBoolean extends RuntimeValue {
+  RuntimeBoolean(bool value) : super(value, RuntimeType.boolean);
+}
+
+class RuntimeString extends RuntimeValue {
+  RuntimeString(String value) : super(value, RuntimeType.string);
 }
