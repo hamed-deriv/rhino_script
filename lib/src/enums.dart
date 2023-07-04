@@ -12,3 +12,10 @@ enum TokenType {
   comment,
   unknown,
 }
+
+enum NodeType {
+  program,
+  numericLiteral,
+  identifier,
+  binaryExpression,
+}
