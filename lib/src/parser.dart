@@ -57,6 +57,11 @@ class Parser {
         return Identifier(_consume());
       case TokenType.number:
         return NumericLiteral(_consume());
+      case TokenType.openParenthesis:
+        _consume();
+        final Expression expression = _parseExpression();
+        _consume(expectedType: TokenType.closeParenthesis);
+        return expression;
 
       default:
         throw Exception(
@@ -65,7 +70,18 @@ class Parser {
     }
   }
 
-  Token _getCurrentToken() => _tokens.first;
+  Token _getCurrentToken() =>
+      _tokens.isEmpty ? Token('', TokenType.endOfFile) : _tokens.first;
 
-  Token _consume() => _tokens.removeAt(0);
+  Token _consume({TokenType? expectedType}) {
+    final Token token = _tokens.removeAt(0);
+
+    if (expectedType != null && token.type != expectedType) {
+      throw Exception(
+        '$runtimeType unexpected token: ${token.type} expected: $expectedType.',
+      );
+    }
+
+    return token;
+  }
 }

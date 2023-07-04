@@ -27,9 +27,6 @@ class Lexer {
         case '=':
           tokens.add(Token(section, TokenType.equals));
           break;
-        case '~':
-          tokens.add(Token(section, TokenType.endOfFile));
-          break;
 
         default:
           if (isNumber(section)) {
