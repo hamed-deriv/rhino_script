@@ -6,41 +6,38 @@ import 'token.dart';
 class Lexer {
   static List<Token> tokenize(String sourceCode) {
     final List<Token> tokens = <Token>[];
-    final Iterable<String> sections = sourceCode
-        .split(' ')
-        .map((String item) => item.trim())
-        .where((String item) => item.isNotEmpty);
+    final Iterable<String> tokenizables = getTokenizable(sourceCode);
 
-    for (final String section in sections) {
-      switch (section) {
+    for (final String tokenizable in tokenizables) {
+      switch (tokenizable) {
         case '(':
-          tokens.add(Token(section, TokenType.openParenthesis));
+          tokens.add(Token(tokenizable, TokenType.openParenthesis));
           break;
         case ')':
-          tokens.add(Token(section, TokenType.closeParenthesis));
+          tokens.add(Token(tokenizable, TokenType.closeParenthesis));
           break;
         case '+':
         case '-':
         case '*':
         case '/':
         case '%':
-          tokens.add(Token(section, TokenType.binaryOperator));
+          tokens.add(Token(tokenizable, TokenType.binaryOperator));
           break;
         case '=':
-          tokens.add(Token(section, TokenType.equals));
+          tokens.add(Token(tokenizable, TokenType.equals));
           break;
 
         default:
-          if (isNumber(section)) {
-            tokens.add(Token(section, TokenType.number));
-          } else if (isAlpha(section)) {
-            if (keywords.containsKey(section)) {
-              tokens.add(Token(section, keywords[section]!));
+          if (isNumber(tokenizable)) {
+            tokens.add(Token(tokenizable, TokenType.number));
+          } else if (isAlpha(tokenizable)) {
+            if (keywords.containsKey(tokenizable)) {
+              tokens.add(Token(tokenizable, keywords[tokenizable]!));
             } else {
-              tokens.add(Token(section, TokenType.identifier));
+              tokens.add(Token(tokenizable, TokenType.identifier));
             }
           } else {
-            tokens.add(Token(section, TokenType.unknown));
+            tokens.add(Token(tokenizable, TokenType.unknown));
           }
       }
     }

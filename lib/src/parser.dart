@@ -98,7 +98,7 @@ class Parser {
   }
 
   Token _getCurrentToken() =>
-      _tokens.isEmpty ? Token('', TokenType.endOfFile) : _tokens.first;
+      _tokens.isEmpty ? Token('EOF', TokenType.endOfFile) : _tokens.first;
 
   Token _consume({TokenType? expectedType}) {
     final Token token = _tokens.removeAt(0);

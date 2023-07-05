@@ -96,7 +96,7 @@ class Interpreter {
     Scope scope,
   ) {
     if (node.isConst && node.value == null) {
-      throw Exception('Constant variable must have a value.');
+      throw Exception('Constant variable must have been initialized.');
     }
 
     return scope.define(

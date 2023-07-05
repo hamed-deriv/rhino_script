@@ -8,9 +8,7 @@ import 'package:rhino_script/src/scope.dart';
 
 void main(List<String> args) {
   final String sourceCode = File('example/sample.rhs').readAsStringSync();
-  final Scope scope = Scope();
-  final Parser parser = Parser();
-  final Program program = parser.produceAST(sourceCode);
+  final Program program = Parser().produceAST(sourceCode);
 
   print('Rhino Script v0.01\n');
 
@@ -23,5 +21,5 @@ void main(List<String> args) {
   }
 
   print('\ninterpreter result:');
-  print('${formatJson(Interpreter().evaluate(program, scope).toJson())}');
+  print('${formatJson(Interpreter().evaluate(program, Scope()).toJson())}');
 }

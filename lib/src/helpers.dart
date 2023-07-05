@@ -20,3 +20,41 @@ bool isMultiplicativeOperator(String value) =>
 
 String formatJson(Map<String, dynamic> statement) =>
     const JsonEncoder.withIndent('  ').convert(statement);
+
+List<String> getTokenizable(String sourceCode) {
+  final List<String> tokenizable = <String>[];
+  final List<String> delimiters = <String>[
+    ' ',
+    '\n',
+    '\t',
+    '(',
+    ')',
+    '+',
+    '-',
+    '*',
+    '/',
+    '%',
+    '=',
+  ];
+
+  String buffer = '';
+
+  for (final String char in sourceCode.split('')) {
+    if (delimiters.contains(char)) {
+      if (buffer.isNotEmpty) {
+        tokenizable.add(buffer);
+        buffer = '';
+      }
+
+      tokenizable.add(char);
+    } else {
+      buffer += char;
+    }
+  }
+
+  if (buffer.isNotEmpty) {
+    tokenizable.add(buffer);
+  }
+
+  return tokenizable.where((String token) => token.trim().isNotEmpty).toList();
+}
