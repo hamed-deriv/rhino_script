@@ -6,7 +6,6 @@ class Token {
   final String value;
   final TokenType type;
 
-  @override
-  String toString() =>
-      <String, dynamic>{'value': value, 'type': type.name}.toString();
+  Map<String, dynamic> toJson() =>
+      <String, dynamic>{'value': value, 'type': type.name};
 }

@@ -6,8 +6,7 @@ abstract class Statement {
 
   final NodeType nodeType;
 
-  @override
-  String toString() => <String, dynamic>{'nodeType': nodeType.name}.toString();
+  Map<String, dynamic> toJson() => <String, dynamic>{'nodeType': nodeType.name};
 }
 
 abstract class Expression extends Statement {
@@ -16,10 +15,10 @@ abstract class Expression extends Statement {
   final Token token;
 
   @override
-  String toString() => <String, dynamic>{
-        'token': '$token',
+  Map<String, dynamic> toJson() => <String, dynamic>{
+        'token': token.toJson(),
         'nodeType': nodeType.name,
-      }.toString();
+      };
 }
 
 class Program extends Statement {
@@ -48,10 +47,10 @@ class BinaryExpression extends Expression {
   final Expression right;
 
   @override
-  String toString() => <String, dynamic>{
-        'operator': '$token',
-        'left': '$left',
-        'right': '$right',
+  Map<String, dynamic> toJson() => <String, dynamic>{
+        'operator': token.toJson(),
+        'left': left.toJson(),
+        'right': right.toJson(),
         'nodeType': nodeType.name,
-      }.toString();
+      };
 }

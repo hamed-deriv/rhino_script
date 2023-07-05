@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 bool isIntegerNumber(String value) => RegExp(r'^[0-9]+$').hasMatch(value);
 
 bool isDecimalNumber(String value) =>
@@ -15,3 +17,6 @@ bool isAdditiveOperator(String value) => RegExp(r'^[-+]$').hasMatch(value);
 
 bool isMultiplicativeOperator(String value) =>
     RegExp(r'^[*%/]$').hasMatch(value);
+
+String formatJson(Map<String, dynamic> statement) =>
+    const JsonEncoder.withIndent('  ').convert(statement);

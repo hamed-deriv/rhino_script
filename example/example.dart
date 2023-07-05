@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:rhino_script/src/abstract_syntax_tree.dart';
+import 'package:rhino_script/src/helpers.dart';
 import 'package:rhino_script/src/interpreter.dart';
 import 'package:rhino_script/src/parser.dart';
 import 'package:rhino_script/src/runtime_value.dart';
@@ -15,9 +16,15 @@ void main(List<String> args) {
   scope.define('x', RuntimeNumber(10));
 
   print('Rhino Script v0.01\n');
-  print('source code:\n$sourceCode\n');
+
+  print('source code:');
+  print(sourceCode);
 
   print('parser result:');
-  program.statements.forEach(print);
-  print('\ninterpreter result:\n${Interpreter().evaluate(program, scope)}');
+  for (final Statement statement in program.statements) {
+    print(formatJson(statement.toJson()));
+  }
+
+  print('\ninterpreter result:');
+  print('${formatJson(Interpreter().evaluate(program, scope).toJson())}');
 }
