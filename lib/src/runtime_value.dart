@@ -6,9 +6,6 @@ abstract class RuntimeValue {
   final Object? value;
 
   final RuntimeType type;
-
-  @override
-  String toString() => 'type: ${type.name}, value: $value';
 }
 
 class RuntimeNull extends RuntimeValue {
