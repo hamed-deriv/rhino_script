@@ -21,25 +21,14 @@ bool isMultiplicativeOperator(String value) =>
 String formatJson(Map<String, dynamic> statement) =>
     const JsonEncoder.withIndent('  ').convert(statement);
 
-List<String> getTokenizable(String sourceCode) {
+Iterable<String> getTokenizable(String input) {
+  final List<String> delimiters = '\t\r\n ()+-*/%=[]{}'.split('');
+  final List<String> parts = input.split('');
   final List<String> tokenizable = <String>[];
-  final List<String> delimiters = <String>[
-    ' ',
-    '\n',
-    '\t',
-    '(',
-    ')',
-    '+',
-    '-',
-    '*',
-    '/',
-    '%',
-    '=',
-  ];
 
   String buffer = '';
 
-  for (final String char in sourceCode.split('')) {
+  for (final String char in parts) {
     if (delimiters.contains(char)) {
       if (buffer.isNotEmpty) {
         tokenizable.add(buffer);
@@ -56,5 +45,5 @@ List<String> getTokenizable(String sourceCode) {
     tokenizable.add(buffer);
   }
 
-  return tokenizable.where((String token) => token.trim().isNotEmpty).toList();
+  return tokenizable.where((String token) => token.trim().isNotEmpty);
 }
