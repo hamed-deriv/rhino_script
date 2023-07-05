@@ -5,10 +5,21 @@ abstract class Statement {
   Statement(this.nodeType);
 
   final NodeType nodeType;
+
+  @override
+  String toString() => <String, dynamic>{'nodeType': nodeType.name}.toString();
 }
 
 abstract class Expression extends Statement {
-  Expression(NodeType nodeType) : super(nodeType);
+  Expression(this.token, NodeType nodeType) : super(nodeType);
+
+  final Token token;
+
+  @override
+  String toString() => <String, dynamic>{
+        'token': '$token',
+        'nodeType': nodeType.name,
+      }.toString();
 }
 
 class Program extends Statement {
@@ -18,28 +29,29 @@ class Program extends Statement {
 }
 
 class Identifier extends Expression {
-  Identifier(this.token) : super(NodeType.identifier);
-
-  final Token token;
+  Identifier(Token token) : super(token, NodeType.identifier);
 }
 
 class NumericLiteral extends Expression {
-  NumericLiteral(this.token) : super(NodeType.numericLiteral);
-
-  final Token token;
+  NumericLiteral(Token token) : super(token, NodeType.numericLiteral);
 }
 
 class NullLiteral extends Expression {
-  NullLiteral(this.token) : super(NodeType.nullLiteral);
-
-  final Token token;
+  NullLiteral(Token token) : super(token, NodeType.nullLiteral);
 }
 
 class BinaryExpression extends Expression {
-  BinaryExpression(this.left, this.right, this.operator)
-      : super(NodeType.binaryExpression);
+  BinaryExpression(Token operator, this.left, this.right)
+      : super(operator, NodeType.binaryExpression);
 
   final Expression left;
   final Expression right;
-  final Token operator;
+
+  @override
+  String toString() => <String, dynamic>{
+        'operator': '$token',
+        'left': '$left',
+        'right': '$right',
+        'nodeType': nodeType.name,
+      }.toString();
 }

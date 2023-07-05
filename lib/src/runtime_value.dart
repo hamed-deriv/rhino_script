@@ -4,8 +4,11 @@ abstract class RuntimeValue {
   const RuntimeValue(this.value, this.type);
 
   final Object? value;
-
   final RuntimeType type;
+
+  @override
+  String toString() =>
+      <String, dynamic>{'value': '$value', 'type': type.name}.toString();
 }
 
 class RuntimeNull extends RuntimeValue {

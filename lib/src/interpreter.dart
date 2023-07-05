@@ -44,7 +44,7 @@ class Interpreter {
       final num rightNumber = (right as RuntimeNumber).value as num;
 
       return _evalNumericExpression(
-        node.operator.value,
+        node.token.value,
         leftNumber,
         rightNumber,
       );

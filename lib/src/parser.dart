@@ -30,7 +30,7 @@ class Parser {
       final Token operator = _consume();
       final Expression right = _parseMultiplicativeExpression();
 
-      left = BinaryExpression(left, right, operator);
+      left = BinaryExpression(operator, left, right);
     }
 
     return left;
@@ -43,7 +43,7 @@ class Parser {
       final Token operator = _consume();
       final Expression right = _parsePrimaryExpression();
 
-      left = BinaryExpression(left, right, operator);
+      left = BinaryExpression(operator, left, right);
     }
 
     return left;
