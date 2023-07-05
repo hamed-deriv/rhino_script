@@ -76,7 +76,7 @@ class Parser {
 
       default:
         throw Exception(
-          '$runtimeType unexpected token: ${_getCurrentToken().type.name}.',
+          '$runtimeType unexpected token: ${_getCurrentToken().toJson()}.',
         );
     }
   }
