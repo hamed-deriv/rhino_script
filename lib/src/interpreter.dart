@@ -74,7 +74,9 @@ class Interpreter {
         break;
       case '/':
         if (right == 0) {
-          throw Exception('Division by zero.');
+          throw Exception(
+            'Division by zero is not allowed. {left: $left, right: $right}',
+          );
         }
         result = left / right;
         break;
