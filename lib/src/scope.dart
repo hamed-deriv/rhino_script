@@ -7,11 +7,7 @@ class Scope {
   final Map<String, RuntimeValue> _values = <String, RuntimeValue>{};
   final Set<String> _constants = <String>{};
 
-  RuntimeValue define(
-    String name,
-    RuntimeValue value, {
-    bool isConstant = false,
-  }) {
+  RuntimeValue define(String name, RuntimeValue value, bool isConstant) {
     if (_values.containsKey(name)) {
       throw Exception('Variable ($name) is already defined.');
     }
@@ -24,11 +20,13 @@ class Scope {
   }
 
   RuntimeValue assign(String name, RuntimeValue value) {
-    if (_constants.contains(name)) {
-      throw Exception('Cannot reassign constant ($name).');
+    final Scope scope = _resolve(name);
+
+    if (scope._constants.contains(name)) {
+      throw Exception('Cannot reassign constant value ($name).');
     }
 
-    return _resolve(name)._values[name] = value;
+    return scope._values[name] = value;
   }
 
   RuntimeValue get(String name) => _resolve(name)._values[name]!;

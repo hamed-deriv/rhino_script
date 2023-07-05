@@ -27,6 +27,21 @@ class Program extends Statement {
   final List<Statement> statements = <Statement>[];
 }
 
+class AssignmentExpression extends Expression {
+  AssignmentExpression(this.assignee, this.value)
+      : super(assignee.token, NodeType.assignmentExpression);
+
+  final Expression assignee;
+  final Expression value;
+
+  @override
+  Map<String, dynamic> toJson() => <String, dynamic>{
+        'nodeType': nodeType.name,
+        'assignee': assignee.toJson(),
+        'value': value.toJson(),
+      };
+}
+
 class VariableDeclaration extends Statement {
   VariableDeclaration(this.identifier, this.value, [this.isConst = false])
       : super(NodeType.variableDeclaration);

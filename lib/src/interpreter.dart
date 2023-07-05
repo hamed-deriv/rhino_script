@@ -14,6 +14,11 @@ class Interpreter {
         return _evaluateProgram(node as Program, scope);
       case NodeType.variableDeclaration:
         return _evaluateVariableDeclaration(node as VariableDeclaration, scope);
+      case NodeType.assignmentExpression:
+        return _evaluateAssignmentExpression(
+          node as AssignmentExpression,
+          scope,
+        );
       case NodeType.identifier:
         return _evaluateIdentifier(node as Identifier, scope);
       case NodeType.nullLiteral:
@@ -101,6 +106,23 @@ class Interpreter {
 
     return scope.define(
       node.identifier.token.value,
+      evaluate(node.value, scope),
+      node.isConst,
+    );
+  }
+
+  RuntimeValue _evaluateAssignmentExpression(
+    AssignmentExpression node,
+    Scope scope,
+  ) {
+    if (node.assignee.nodeType != NodeType.identifier) {
+      throw Exception(
+        'Assignee must be an identifier. (${node.assignee.toJson()})',
+      );
+    }
+
+    return scope.assign(
+      (node.assignee as Identifier).token.value,
       evaluate(node.value, scope),
     );
   }

@@ -30,7 +30,21 @@ class Parser {
     }
   }
 
-  Expression _parseExpression() => _parseAdditiveExpression();
+  Expression _parseExpression() => _parseAssignmentExpression();
+
+  Expression _parseAssignmentExpression() {
+    Expression left = _parseAdditiveExpression();
+
+    if (_getCurrentToken().type == TokenType.equals) {
+      _consume();
+
+      final Expression right = _parseAssignmentExpression();
+
+      left = AssignmentExpression(left, right);
+    }
+
+    return left;
+  }
 
   Expression _parseAdditiveExpression() {
     Expression left = _parseMultiplicativeExpression();

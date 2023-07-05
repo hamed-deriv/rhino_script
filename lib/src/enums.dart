@@ -19,6 +19,7 @@ enum TokenType {
 enum NodeType {
   program,
   variableDeclaration,
+  assignmentExpression,
   numericLiteral,
   nullLiteral,
   identifier,
