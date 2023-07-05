@@ -33,7 +33,7 @@ class Parser {
   Expression _parseExpression() => _parseAssignmentExpression();
 
   Expression _parseAssignmentExpression() {
-    Expression left = _parseAdditiveExpression();
+    Expression left = _parseObjectExpression();
 
     if (_getCurrentToken().type == TokenType.equals) {
       _consume();
@@ -44,6 +44,44 @@ class Parser {
     }
 
     return left;
+  }
+
+  Expression _parseObjectExpression() {
+    if (_getCurrentToken().type != TokenType.openBrace) {
+      return _parseAdditiveExpression();
+    }
+
+    _consume();
+
+    final List<Property> properties = <Property>[];
+
+    while (_getCurrentToken().type != TokenType.endOfFile &&
+        _getCurrentToken().type != TokenType.closeBrace) {
+      final String key = _consume(expectedType: TokenType.identifier).value;
+
+      if (_getCurrentToken().type == TokenType.comma ||
+          _getCurrentToken().type == TokenType.closeBrace) {
+        if (_getCurrentToken().type == TokenType.comma) {
+          _consume();
+        }
+
+        properties.add(Property(key));
+      } else {
+        _consume(expectedType: TokenType.colon);
+
+        final Expression value = _parseExpression();
+
+        properties.add(Property(key, value));
+
+        if (_getCurrentToken().type != TokenType.closeBrace) {
+          _consume(expectedType: TokenType.comma);
+        }
+      }
+    }
+
+    _consume(expectedType: TokenType.closeBrace);
+
+    return ObjectLiteral(properties);
   }
 
   Expression _parseAdditiveExpression() {

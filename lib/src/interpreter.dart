@@ -1,3 +1,5 @@
+import 'package:rhino_script/src/token.dart';
+
 import 'abstract_syntax_tree.dart';
 import 'enums.dart';
 import 'runtime_value.dart';
@@ -24,7 +26,13 @@ class Interpreter {
       case NodeType.nullLiteral:
         return const RuntimeNull();
       case NodeType.numericLiteral:
-        return RuntimeNumber(num.parse((node as NumericLiteral).token.value));
+        final Token? token = (node as NumericLiteral).token;
+
+        if (token == null) {
+          throw Exception('NumericLiteral token is null.');
+        }
+
+        return RuntimeNumber(num.parse(token.value));
       case NodeType.binaryExpression:
         return _evaluateBinaryExpression(node as BinaryExpression, scope);
 
@@ -43,8 +51,13 @@ class Interpreter {
     return result;
   }
 
-  static RuntimeValue _evaluateIdentifier(Identifier node, Scope scope) =>
-      scope.get(node.token.value);
+  static RuntimeValue _evaluateIdentifier(Identifier node, Scope scope) {
+    if (node.token == null) {
+      throw Exception('Identifier token is null.');
+    }
+
+    return scope.get(node.token!.value);
+  }
 
   static RuntimeValue _evaluateBinaryExpression(
       BinaryExpression node, Scope scope) {
@@ -55,8 +68,12 @@ class Interpreter {
       final num leftNumber = (left as RuntimeNumber).value as num;
       final num rightNumber = (right as RuntimeNumber).value as num;
 
+      if (node.token == null) {
+        throw Exception('BinaryExpression token is null.');
+      }
+
       return _evalNumericExpression(
-        node.token.value,
+        node.token!.value,
         leftNumber,
         rightNumber,
       );
@@ -106,8 +123,12 @@ class Interpreter {
       throw Exception('Constant variable must have been initialized.');
     }
 
+    if (node.identifier.token == null) {
+      throw Exception('VariableDeclaration identifier token is null.');
+    }
+
     return scope.define(
-      node.identifier.token.value,
+      node.identifier.token!.value,
       evaluate(node.value, scope),
       node.isConst,
     );
@@ -123,8 +144,12 @@ class Interpreter {
       );
     }
 
+    if (node.assignee.token == null) {
+      throw Exception('AssignmentExpression assignee token is null.');
+    }
+
     return scope.assign(
-      (node.assignee as Identifier).token.value,
+      (node.assignee as Identifier).token!.value,
       evaluate(node.value, scope),
     );
   }

@@ -10,14 +10,14 @@ abstract class Statement {
 }
 
 abstract class Expression extends Statement {
-  const Expression(this.token, NodeType nodeType) : super(nodeType);
+  const Expression(NodeType nodeType, [this.token]) : super(nodeType);
 
-  final Token token;
+  final Token? token;
 
   @override
   Map<String, dynamic> toJson() => <String, dynamic>{
         'nodeType': nodeType.name,
-        'token': token.toJson(),
+        'token': token?.toJson(),
       };
 }
 
@@ -27,9 +27,16 @@ class Program extends Statement {
   final List<Statement> statements = <Statement>[];
 }
 
+class Property extends Statement {
+  Property(this.key, [this.value]) : super(NodeType.objectLiteral);
+
+  final String key;
+  final Expression? value;
+}
+
 class AssignmentExpression extends Expression {
   AssignmentExpression(this.assignee, this.value)
-      : super(assignee.token, NodeType.assignmentExpression);
+      : super(NodeType.assignmentExpression, assignee.token);
 
   final Expression assignee;
   final Expression value;
@@ -60,27 +67,33 @@ class VariableDeclaration extends Statement {
 }
 
 class Identifier extends Expression {
-  const Identifier(Token token) : super(token, NodeType.identifier);
+  const Identifier(Token token) : super(NodeType.identifier, token);
 }
 
 class NumericLiteral extends Expression {
-  const NumericLiteral(Token token) : super(token, NodeType.numericLiteral);
+  const NumericLiteral(Token token) : super(NodeType.numericLiteral, token);
 }
 
 class NullLiteral extends Expression {
-  const NullLiteral(Token token) : super(token, NodeType.nullLiteral);
+  const NullLiteral(Token token) : super(NodeType.nullLiteral, token);
+}
+
+class ObjectLiteral extends Expression {
+  ObjectLiteral(this.properties) : super(NodeType.objectLiteral);
+
+  final List<Property> properties;
 }
 
 class BinaryExpression extends Expression {
   const BinaryExpression(Token operator, this.left, this.right)
-      : super(operator, NodeType.binaryExpression);
+      : super(NodeType.binaryExpression, operator);
 
   final Expression left;
   final Expression right;
 
   @override
   Map<String, dynamic> toJson() => <String, dynamic>{
-        'operator': token.toJson(),
+        'operator': token?.toJson(),
         'leftOperand': left.toJson(),
         'rightOperand': right.toJson(),
         'nodeType': nodeType.name,

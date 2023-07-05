@@ -16,6 +16,14 @@ class Lexer {
         case ')':
           tokens.add(Token(tokenizable, TokenType.closeParenthesis));
           break;
+
+        case '[':
+          tokens.add(Token(tokenizable, TokenType.openBrace));
+          break;
+        case ']':
+          tokens.add(Token(tokenizable, TokenType.closeBrace));
+          break;
+
         case '+':
         case '-':
         case '*':
@@ -23,8 +31,15 @@ class Lexer {
         case '%':
           tokens.add(Token(tokenizable, TokenType.binaryOperator));
           break;
+
         case '=':
           tokens.add(Token(tokenizable, TokenType.equals));
+          break;
+        case ':':
+          tokens.add(Token(tokenizable, TokenType.colon));
+          break;
+        case ',':
+          tokens.add(Token(tokenizable, TokenType.comma));
           break;
 
         default:

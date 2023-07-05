@@ -1,28 +1,43 @@
 enum TokenType {
+  identifier,
   number,
   string,
-  identifier,
+
   nullable,
   constant,
   variable,
+
   unaryOperator,
   binaryOperator,
   ternaryOperator,
   equals,
+  comma,
+  colon,
   openParenthesis,
   closeParenthesis,
+  openBrace,
+  closeBrace,
+
   comment,
-  unknown,
   endOfFile,
+  unknown,
 }
 
 enum NodeType {
   program,
+
+  identifier,
   variableDeclaration,
+
+  property,
+
   assignmentExpression,
   numericLiteral,
+  booleanLiteral,
+  stringLiteral,
+  objectLiteral,
   nullLiteral,
-  identifier,
+
   binaryExpression,
 }
 
