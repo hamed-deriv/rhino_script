@@ -16,13 +16,13 @@ class RuntimeNull extends RuntimeValue {
 }
 
 class RuntimeNumber extends RuntimeValue {
-  RuntimeNumber(num value) : super(value, RuntimeType.number);
+  RuntimeNumber([num value = 0]) : super(value, RuntimeType.number);
 }
 
 class RuntimeBoolean extends RuntimeValue {
-  RuntimeBoolean(bool value) : super(value, RuntimeType.boolean);
+  RuntimeBoolean([bool value = false]) : super(value, RuntimeType.boolean);
 }
 
 class RuntimeString extends RuntimeValue {
-  RuntimeString(String value) : super(value, RuntimeType.string);
+  RuntimeString([String value = '']) : super(value, RuntimeType.string);
 }
