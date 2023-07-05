@@ -1,1 +1,3 @@
-x + x * 2
+ var intVar = 10
+ const decimalVar = 2.5
+ intVar + intVar * ( decimalVar - 2 )

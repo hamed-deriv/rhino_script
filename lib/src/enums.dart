@@ -3,13 +3,14 @@ enum TokenType {
   string,
   identifier,
   nullable,
+  constant,
+  variable,
   unaryOperator,
   binaryOperator,
   ternaryOperator,
   equals,
   openParenthesis,
   closeParenthesis,
-  keyword,
   comment,
   unknown,
   endOfFile,
@@ -17,6 +18,7 @@ enum TokenType {
 
 enum NodeType {
   program,
+  variableDeclaration,
   numericLiteral,
   nullLiteral,
   identifier,

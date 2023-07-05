@@ -8,7 +8,7 @@ class Scope {
 
   RuntimeValue define(String name, RuntimeValue value) {
     if (values.containsKey(name)) {
-      throw Exception('Variable $name is already defined.');
+      throw Exception('Variable ($name) is already defined.');
     }
 
     return values[name] = value;

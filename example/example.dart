@@ -4,7 +4,6 @@ import 'package:rhino_script/src/abstract_syntax_tree.dart';
 import 'package:rhino_script/src/helpers.dart';
 import 'package:rhino_script/src/interpreter.dart';
 import 'package:rhino_script/src/parser.dart';
-import 'package:rhino_script/src/runtime_value.dart';
 import 'package:rhino_script/src/scope.dart';
 
 void main(List<String> args) {
@@ -12,8 +11,6 @@ void main(List<String> args) {
   final Scope scope = Scope();
   final Parser parser = Parser();
   final Program program = parser.produceAST(sourceCode);
-
-  scope.define('x', RuntimeNumber(10));
 
   print('Rhino Script v0.01\n');
 

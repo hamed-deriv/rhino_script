@@ -34,8 +34,8 @@ class Lexer {
           if (isNumber(section)) {
             tokens.add(Token(section, TokenType.number));
           } else if (isAlpha(section)) {
-            if (keywords.contains(section)) {
-              tokens.add(Token(section, TokenType.keyword));
+            if (keywords.containsKey(section)) {
+              tokens.add(Token(section, keywords[section]!));
             } else {
               tokens.add(Token(section, TokenType.identifier));
             }

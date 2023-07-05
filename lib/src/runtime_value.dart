@@ -7,7 +7,7 @@ abstract class RuntimeValue {
   final RuntimeType type;
 
   Map<String, dynamic> toJson() =>
-      <String, dynamic>{'value': value, 'type': type.name};
+      <String, dynamic>{'value': value, 'runtimeType': type.name};
 }
 
 class RuntimeNull extends RuntimeValue {

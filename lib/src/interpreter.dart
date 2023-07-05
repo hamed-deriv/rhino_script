@@ -4,10 +4,16 @@ import 'runtime_value.dart';
 import 'scope.dart';
 
 class Interpreter {
-  RuntimeValue evaluate(Statement node, Scope scope) {
+  RuntimeValue evaluate(Statement? node, Scope scope) {
+    if (node == null) {
+      return const RuntimeNull();
+    }
+
     switch (node.nodeType) {
       case NodeType.program:
         return _evaluateProgram(node as Program, scope);
+      case NodeType.variableDeclaration:
+        return _evaluateVariableDeclaration(node as VariableDeclaration, scope);
       case NodeType.identifier:
         return _evaluateIdentifier(node as Identifier, scope);
       case NodeType.nullLiteral:
@@ -81,5 +87,19 @@ class Interpreter {
     }
 
     return RuntimeNumber(result);
+  }
+
+  RuntimeValue _evaluateVariableDeclaration(
+    VariableDeclaration node,
+    Scope scope,
+  ) {
+    if (node.isConst && node.value == null) {
+      throw Exception('Constant variable must have a value.');
+    }
+
+    return scope.define(
+      node.identifier.token.value,
+      evaluate(node.value, scope),
+    );
   }
 }

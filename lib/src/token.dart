@@ -7,5 +7,5 @@ class Token {
   final TokenType type;
 
   Map<String, dynamic> toJson() =>
-      <String, dynamic>{'value': value, 'type': type.name};
+      <String, dynamic>{'value': value, 'tokenType': type.name};
 }

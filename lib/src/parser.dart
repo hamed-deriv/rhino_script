@@ -19,7 +19,16 @@ class Parser {
     return program;
   }
 
-  Statement _parseStatement() => _parseExpression();
+  Statement _parseStatement() {
+    switch (_getCurrentToken().type) {
+      case TokenType.variable:
+      case TokenType.constant:
+        return _parseVariableDeclaration();
+
+      default:
+        return _parseExpression();
+    }
+  }
 
   Expression _parseExpression() => _parseAdditiveExpression();
 
@@ -55,8 +64,8 @@ class Parser {
     switch (tokenType) {
       case TokenType.identifier:
         return Identifier(_consume());
-      case TokenType.keyword:
-        return _handleKeyword(_consume());
+      case TokenType.nullable:
+        return NullLiteral(_consume());
       case TokenType.number:
         return NumericLiteral(_consume());
       case TokenType.openParenthesis:
@@ -67,9 +76,25 @@ class Parser {
 
       default:
         throw Exception(
-          '$runtimeType unexpected token: ${_getCurrentToken()}.',
+          '$runtimeType unexpected token: ${_getCurrentToken().type.name}.',
         );
     }
+  }
+
+  Statement _parseVariableDeclaration() {
+    final Token keyword = _consume();
+    final bool isConst = keyword.type == TokenType.constant;
+    final Identifier identifier =
+        Identifier(_consume(expectedType: TokenType.identifier));
+
+    Expression? value;
+
+    if (_getCurrentToken().type == TokenType.equals) {
+      _consume();
+      value = _parseExpression();
+    }
+
+    return VariableDeclaration(identifier, value, isConst);
   }
 
   Token _getCurrentToken() =>
@@ -85,17 +110,5 @@ class Parser {
     }
 
     return token;
-  }
-
-  Expression _handleKeyword(Token token) {
-    switch (token.value) {
-      case 'null':
-        return NullLiteral(token);
-
-      default:
-        throw Exception(
-          '$runtimeType unexpected keyword: ${token.value}.',
-        );
-    }
   }
 }
