@@ -21,5 +21,5 @@ void main(List<String> args) {
   }
 
   print('\ninterpreter result:');
-  print('${formatJson(Interpreter().evaluate(program, Scope()).toJson())}');
+  print('${formatJson(Interpreter.evaluate(program, Scope()).toJson())}');
 }

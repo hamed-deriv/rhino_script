@@ -2,7 +2,7 @@ import 'enums.dart';
 import 'token.dart';
 
 abstract class Statement {
-  Statement(this.nodeType);
+  const Statement(this.nodeType);
 
   final NodeType nodeType;
 
@@ -10,7 +10,7 @@ abstract class Statement {
 }
 
 abstract class Expression extends Statement {
-  Expression(this.token, NodeType nodeType) : super(nodeType);
+  const Expression(this.token, NodeType nodeType) : super(nodeType);
 
   final Token token;
 
@@ -43,7 +43,7 @@ class AssignmentExpression extends Expression {
 }
 
 class VariableDeclaration extends Statement {
-  VariableDeclaration(this.identifier, this.value, [this.isConst = false])
+  const VariableDeclaration(this.identifier, this.value, [this.isConst = false])
       : super(NodeType.variableDeclaration);
 
   final Identifier identifier;
@@ -60,19 +60,19 @@ class VariableDeclaration extends Statement {
 }
 
 class Identifier extends Expression {
-  Identifier(Token token) : super(token, NodeType.identifier);
+  const Identifier(Token token) : super(token, NodeType.identifier);
 }
 
 class NumericLiteral extends Expression {
-  NumericLiteral(Token token) : super(token, NodeType.numericLiteral);
+  const NumericLiteral(Token token) : super(token, NodeType.numericLiteral);
 }
 
 class NullLiteral extends Expression {
-  NullLiteral(Token token) : super(token, NodeType.nullLiteral);
+  const NullLiteral(Token token) : super(token, NodeType.nullLiteral);
 }
 
 class BinaryExpression extends Expression {
-  BinaryExpression(Token operator, this.left, this.right)
+  const BinaryExpression(Token operator, this.left, this.right)
       : super(operator, NodeType.binaryExpression);
 
   final Expression left;

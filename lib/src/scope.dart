@@ -14,7 +14,9 @@ class Scope {
       throw Exception('Variable ($name) is already defined.');
     }
 
-    _setConstant(name);
+    if (isConstant) {
+      _setConstant(name);
+    }
 
     return _set(name, value);
   }
@@ -27,14 +29,13 @@ class Scope {
     return _set(name, value);
   }
 
-  RuntimeValue _set(String name, RuntimeValue value) =>
-      _resolve(name)._values[name] = value;
+  RuntimeValue _set(String name, RuntimeValue value) => _values[name] = value;
 
-  void _setConstant(String name) => _resolve(name)._constants.add(name);
+  void _setConstant(String name) => _constants.add(name);
 
-  bool _isDefined(String name) => _resolve(name)._values.containsKey(name);
+  bool _isDefined(String name) => _values.containsKey(name);
 
-  bool _isConstant(String name) => _resolve(name)._constants.contains(name);
+  bool _isConstant(String name) => _constants.contains(name);
 
   Scope _resolve(String name) {
     if (_values.containsKey(name)) {

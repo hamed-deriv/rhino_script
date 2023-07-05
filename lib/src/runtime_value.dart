@@ -15,13 +15,14 @@ class RuntimeNull extends RuntimeValue {
 }
 
 class RuntimeNumber extends RuntimeValue {
-  RuntimeNumber([num value = 0]) : super(value, RuntimeType.number);
+  const RuntimeNumber([num value = 0]) : super(value, RuntimeType.number);
 }
 
 class RuntimeBoolean extends RuntimeValue {
-  RuntimeBoolean([bool value = false]) : super(value, RuntimeType.boolean);
+  const RuntimeBoolean([bool value = false])
+      : super(value, RuntimeType.boolean);
 }
 
 class RuntimeString extends RuntimeValue {
-  RuntimeString([String value = '']) : super(value, RuntimeType.string);
+  const RuntimeString([String value = '']) : super(value, RuntimeType.string);
 }

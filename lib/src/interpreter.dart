@@ -4,7 +4,7 @@ import 'runtime_value.dart';
 import 'scope.dart';
 
 class Interpreter {
-  RuntimeValue evaluate(Statement? node, Scope scope) {
+  static RuntimeValue evaluate(Statement? node, Scope scope) {
     if (node == null) {
       return const RuntimeNull();
     }
@@ -33,7 +33,7 @@ class Interpreter {
     }
   }
 
-  RuntimeValue _evaluateProgram(Program node, Scope scope) {
+  static RuntimeValue _evaluateProgram(Program node, Scope scope) {
     RuntimeValue result = const RuntimeNull();
 
     for (final Statement statement in node.statements) {
@@ -43,10 +43,11 @@ class Interpreter {
     return result;
   }
 
-  RuntimeValue _evaluateIdentifier(Identifier node, Scope scope) =>
+  static RuntimeValue _evaluateIdentifier(Identifier node, Scope scope) =>
       scope.get(node.token.value);
 
-  RuntimeValue _evaluateBinaryExpression(BinaryExpression node, Scope scope) {
+  static RuntimeValue _evaluateBinaryExpression(
+      BinaryExpression node, Scope scope) {
     final RuntimeValue left = evaluate(node.left, scope);
     final RuntimeValue right = evaluate(node.right, scope);
 
@@ -64,7 +65,8 @@ class Interpreter {
     }
   }
 
-  RuntimeValue _evalNumericExpression(String operator, num left, num right) {
+  static RuntimeValue _evalNumericExpression(
+      String operator, num left, num right) {
     num result = 0;
 
     switch (operator) {
@@ -96,7 +98,7 @@ class Interpreter {
     return RuntimeNumber(result);
   }
 
-  RuntimeValue _evaluateVariableDeclaration(
+  static RuntimeValue _evaluateVariableDeclaration(
     VariableDeclaration node,
     Scope scope,
   ) {
@@ -111,7 +113,7 @@ class Interpreter {
     );
   }
 
-  RuntimeValue _evaluateAssignmentExpression(
+  static RuntimeValue _evaluateAssignmentExpression(
     AssignmentExpression node,
     Scope scope,
   ) {

@@ -2,3 +2,4 @@ var intVar = 10
 const decimalVar = 2.5
 const result = intVar / intVar * (decimalVar - 2)
 intVar = 20 + result
+intVar = intVar % 3
