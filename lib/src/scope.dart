@@ -4,23 +4,37 @@ class Scope {
   Scope({this.parent});
 
   final Scope? parent;
-  final Map<String, RuntimeValue> values = <String, RuntimeValue>{};
+  final Map<String, RuntimeValue> _values = <String, RuntimeValue>{};
+  final Set<String> _constants = <String>{};
 
-  RuntimeValue define(String name, RuntimeValue value) {
-    if (values.containsKey(name)) {
+  RuntimeValue define(
+    String name,
+    RuntimeValue value, {
+    bool isConstant = false,
+  }) {
+    if (_values.containsKey(name)) {
       throw Exception('Variable ($name) is already defined.');
     }
 
-    return values[name] = value;
+    if (isConstant) {
+      _constants.add(name);
+    }
+
+    return _values[name] = value;
   }
 
-  RuntimeValue assign(String name, RuntimeValue value) =>
-      _resolve(name).values[name] = value;
+  RuntimeValue assign(String name, RuntimeValue value) {
+    if (_constants.contains(name)) {
+      throw Exception('Cannot reassign constant ($name).');
+    }
 
-  RuntimeValue get(String name) => _resolve(name).values[name]!;
+    return _resolve(name)._values[name] = value;
+  }
+
+  RuntimeValue get(String name) => _resolve(name)._values[name]!;
 
   Scope _resolve(String name) {
-    if (values.containsKey(name)) {
+    if (_values.containsKey(name)) {
       return this;
     }
 
